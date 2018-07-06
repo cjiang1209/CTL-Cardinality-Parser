@@ -56,6 +56,19 @@ public class NotFormula extends BooleanFormula {
 		if (path == BooleanConstant.FALSE) {
 			return BooleanConstant.TRUE;
 		}
+		if (path instanceof NotFormula) {
+			return ((NotFormula) path).path;
+		}
 		return this;
+	}
+
+	@Override
+	public BooleanFormula normalize() {
+		return path.pushNegation();
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		return path.normalize();
 	}
 }

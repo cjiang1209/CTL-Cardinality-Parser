@@ -58,4 +58,15 @@ public class GFormula extends BooleanFormula {
 		}
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		path = path.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		return new FFormula(path.pushNegation());
+	}
 }

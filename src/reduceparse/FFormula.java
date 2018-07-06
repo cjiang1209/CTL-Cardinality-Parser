@@ -28,7 +28,10 @@ public class FFormula extends BooleanFormula {
 
 	@Override
 	public boolean isNested() {
-		if (path.hasLinearTemplate()) {
+		if (path.isNested()) {
+			return true;
+		}
+		if (path.isTemporal()) {
 			return true;
 		}
 		return false;
@@ -51,5 +54,16 @@ public class FFormula extends BooleanFormula {
 			return path;
 		}
 		return this;
+	}
+
+	@Override
+	public BooleanFormula normalize() {
+		path = path.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		return new GFormula(path.pushNegation());
 	}
 }

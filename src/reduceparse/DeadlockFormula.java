@@ -55,4 +55,15 @@ public class DeadlockFormula extends BooleanFormula {
 
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		theDeadlock.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		throw new UnsupportedOperationException();
+	}
 }

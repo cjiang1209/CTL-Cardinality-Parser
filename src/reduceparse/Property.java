@@ -69,4 +69,8 @@ public class Property {
 	public void evaluate() {
 		theFormula = theFormula.evaluate();
 	}
+
+	public void normalize() {
+		theFormula = theFormula.normalize();
+	}
 }

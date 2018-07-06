@@ -80,4 +80,16 @@ public class UFormula extends BooleanFormula {
 
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		pathLeft = pathLeft.normalize();
+		pathRight = pathRight.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		throw new UnsupportedOperationException();
+	}
 }

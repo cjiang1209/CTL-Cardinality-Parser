@@ -25,18 +25,6 @@ public class LTEFormula extends BooleanFormula {
 
 	@Override
 	public String plainOutput() {
-		if (pathLeft instanceof ConstantExpression
-				&& pathRight instanceof TokenCountExpression) {
-			ConstantExpression ce = (ConstantExpression) pathLeft;
-			assert (ce.getConstantValue() == 1);
-			return "( " + pathRight.plainOutput() + " == 1 )";
-		}
-		if (pathLeft instanceof TokenCountExpression
-				&& pathRight instanceof TokenCountExpression) {
-			return "( ( " + pathLeft.plainOutput() + " == 0 ) | ( "
-					+ pathRight.plainOutput() + " == 1 ) )";
-		}
-
 		return "( " + pathLeft.plainOutput() + " <= " + pathRight.plainOutput()
 				+ " )";
 	}
@@ -69,12 +57,27 @@ public class LTEFormula extends BooleanFormula {
 			if (ce.getConstantValue() == 0) {
 				return BooleanConstant.TRUE;
 			} else if (ce.getConstantValue() == 1) {
-				return this;
+				return EqualFormula.makeFormula(pathRight, 1);
 			} else {
 				assert(ce.getConstantValue() >= 2);
 				return BooleanConstant.FALSE;
 			}
 		}
+		if (pathLeft instanceof TokenCountExpression
+				&& pathRight instanceof TokenCountExpression) {
+			return OrFormula.makeFormula(EqualFormula.makeFormula(pathLeft, 0),
+					EqualFormula.makeFormula(pathRight, 1));
+		}
 		return this;
+	}
+
+	@Override
+	public BooleanFormula normalize() {
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		throw new UnsupportedOperationException();
 	}
 }

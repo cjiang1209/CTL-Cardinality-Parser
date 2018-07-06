@@ -49,4 +49,15 @@ public class EFormula extends BooleanFormula {
 		}
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		path = path.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		return new AFormula(path.pushNegation());
+	}
 }

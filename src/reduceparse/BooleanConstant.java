@@ -39,4 +39,14 @@ public class BooleanConstant extends BooleanFormula {
 	public BooleanFormula evaluate() {
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		return value ? BooleanConstant.FALSE : BooleanConstant.TRUE;
+	}
 }

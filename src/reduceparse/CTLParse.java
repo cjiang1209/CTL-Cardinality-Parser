@@ -43,12 +43,22 @@ public class CTLParse {
 
 		for (Property p : thoseProperties) {
 			p.evaluate();
+			p.normalize();
 		}
 
+		System.out.println(String.format("%-40s %7s %7s %7s %7s %7s",
+				"Property", "Const", "Tempor", "Nested", "Linear", "Select"));
 		for (Property p : thoseProperties) {
-			System.out.println(p.propID + ": " + p.isConstant() + " "
-					+ p.isTemporal() + " " + p.isNested() + " "
-					+ p.hasLinearTemplate());
+			System.out
+					.println(String.format(
+							"%-40s %7s %7s %7s %7s %7s",
+							p.propID,
+							p.isConstant(),
+							p.isTemporal(),
+							p.isNested(),
+							p.hasLinearTemplate(),
+							p.isTemporal() && p.isNested()
+									&& !p.hasLinearTemplate() ? "***" : ""));
 		}
 
 		for (Property p : thoseProperties) {
@@ -215,5 +225,4 @@ public class CTLParse {
 			e.printStackTrace();
 		}
 	}
-
 }

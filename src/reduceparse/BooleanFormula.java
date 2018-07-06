@@ -19,4 +19,8 @@ public abstract class BooleanFormula {
 	public abstract boolean isPathFormula();
 
 	public abstract BooleanFormula evaluate();
+
+	// Transformed into negation normal form
+	public abstract BooleanFormula normalize();
+	public abstract BooleanFormula pushNegation();
 }

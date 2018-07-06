@@ -81,4 +81,17 @@ public class AndFormula extends BooleanFormula {
 
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		pathLeft = pathLeft.normalize();
+		pathRight = pathRight.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		return OrFormula.makeFormula(pathLeft.pushNegation(),
+				pathRight.pushNegation());
+	}
 }

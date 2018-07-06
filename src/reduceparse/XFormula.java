@@ -59,4 +59,16 @@ public class XFormula extends BooleanFormula {
 		}
 		return this;
 	}
+
+	@Override
+	public BooleanFormula normalize() {
+		path = path.normalize();
+		return this;
+	}
+
+	@Override
+	public BooleanFormula pushNegation() {
+		path = path.pushNegation();
+		return this;
+	}
 }
