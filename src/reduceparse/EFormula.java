@@ -11,19 +11,32 @@ package reduceparse;
  */
 public class EFormula implements BooleanFormula {
 	public BooleanFormula path;
-	
-	
+
 	public EFormula(BooleanFormula aPath) {
 		path = aPath;
 	}
-	
+
 	@Override
 	public String plainOutput() {
 		return "(E" + path.plainOutput() + ")";
 	}
-	
-        
-       /* public String plainOutput() {
-		return "(E " + path.smartOutput() + ")";
-	}*/
+
+	/*
+	 * public String plainOutput() { return "(E " + path.smartOutput() + ")"; }
+	 */
+
+	@Override
+	public boolean isTemporal() {
+		return true;
+	}
+
+	@Override
+	public boolean isNested() {
+		return path.isNested();
+	}
+
+	@Override
+	public boolean hasLinearTemplate() {
+		return path.hasLinearTemplate();
+	}
 }

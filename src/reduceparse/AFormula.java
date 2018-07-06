@@ -11,19 +11,32 @@ package reduceparse;
  */
 public class AFormula implements BooleanFormula {
 	public BooleanFormula path;
-	
+
 	public AFormula(BooleanFormula aPath) {
 		path = aPath;
 	}
-	
-	
+
 	@Override
 	public String plainOutput() {
 		return "(A" + path.plainOutput() + ")";
 	}
-        
-        /*public String plainOutput() {
-		return "(A " + path.smartOutput() + ")";
-	}*/
+
+	/*
+	 * public String plainOutput() { return "(A " + path.smartOutput() + ")"; }
+	 */
+
+	@Override
+	public boolean isTemporal() {
+		return true;
+	}
 	
+	@Override
+	public boolean isNested() {
+		return path.isNested();
+	}
+
+	@Override
+	public boolean hasLinearTemplate() {
+		return path.hasLinearTemplate();
+	}
 }

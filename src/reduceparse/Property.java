@@ -11,39 +11,57 @@ package reduceparse;
  */
 public class Property {
 	public String propID;
-        public String varID;
+	public String varID;
 	public BooleanFormula theFormula;
-        public int propType; //1:AG 0:EF
-	
+	public int propType; // 1:AG 0:EF
+
 	public Property(String id, BooleanFormula aFormula) {
 		propID = id;
-                String test="CTLCardinality-";
-                varID = "CTLCardinality_"+id.substring(id.lastIndexOf("CTLCardinality-")+test.length(), id.length());
+		String test = "CTLCardinality-";
+		varID = "CTLCardinality_"
+				+ id.substring(
+						id.lastIndexOf("CTLCardinality-") + test.length(),
+						id.length());
 		theFormula = aFormula;
-                propType = aFormula.plainOutput().startsWith("(reachable &!")?1:0;
-                
+		propType = aFormula.plainOutput().startsWith("(reachable &!") ? 1 : 0;
+
 	}
-	
+
 	public String toString() {
-		String result = "PROPERTY: " + propID + " \t" + theFormula.plainOutput();
+		String result = "PROPERTY: " + propID + " \t"
+				+ theFormula.plainOutput();
 		return result;
 	}
-        
-        public String smartOut(PetriModel64 theModel) {
+
+	public String smartOut(PetriModel64 theModel) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\tstateset " + varID + " := " + "initial & "+ theFormula.plainOutput());
+		sb.append("\tstateset " + varID + " := " + "initial & "
+				+ theFormula.plainOutput());
 		sb.append("; // ");
 		return sb.toString();
 	}
-	
+
 	public String smartOutBottom() {
 		StringBuilder sb = new StringBuilder();
-                sb.append("\ncompute(automodel."+varID+");");
-                sb.append("\nprint(\"FORMULA " + propID + " \", cond(empty(automodel." + varID + "),\"FALSE\",\"TRUE\"), \" ");
-                
+		sb.append("\ncompute(automodel." + varID + ");");
+		sb.append("\nprint(\"FORMULA " + propID + " \", cond(empty(automodel."
+				+ varID + "),\"FALSE\",\"TRUE\"), \" ");
+
 		sb.append("TECHNIQUES SEQUENTIAL_PROCESSING DECISION_DIAGRAMS\\n\");");
-		//String delim = "";
-		//sb.append(") // " + boundFormulaName);
+		// String delim = "";
+		// sb.append(") // " + boundFormulaName);
 		return sb.toString();
+	}
+
+	public boolean isTemporal() {
+		return theFormula.isTemporal();
+	}
+
+	public boolean isNested() {
+		return theFormula.isNested();
+	}
+
+	public boolean hasLinearTemplate() {
+		return theFormula.hasLinearTemplate();
 	}
 }

@@ -12,4 +12,8 @@ package reduceparse;
 public interface BooleanFormula {
 	public String plainOutput();
        //public BooleanFormula makeFormula(BooleanFormula left, BooleanFormula right);
+	
+	boolean isTemporal();
+	boolean isNested();
+	boolean hasLinearTemplate();
 }

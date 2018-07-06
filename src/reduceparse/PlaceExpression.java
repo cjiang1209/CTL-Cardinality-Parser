@@ -11,16 +11,28 @@ package reduceparse;
  */
 public class PlaceExpression implements BooleanFormula {
 	public String placeName;
-	
+
 	public PlaceExpression(String name) {
 		placeName = name;
 	}
-	
-	
-	
+
 	@Override
 	public String plainOutput() {
 		return "( " + placeName + " )";
 	}
-	
+
+	@Override
+	public boolean isTemporal() {
+		return false;
+	}
+
+	@Override
+	public boolean isNested() {
+		return false;
+	}
+
+	@Override
+	public boolean hasLinearTemplate() {
+		return true;
+	}
 }

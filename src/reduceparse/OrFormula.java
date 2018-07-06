@@ -12,20 +12,44 @@ package reduceparse;
 public class OrFormula implements BooleanFormula {
 	public BooleanFormula pathLeft;
 	public BooleanFormula pathRight;
-	
-	
+
 	private OrFormula(BooleanFormula left, BooleanFormula right) {
 		pathLeft = left;
 		pathRight = right;
 	}
-	
-	public static BooleanFormula makeFormula(BooleanFormula left, BooleanFormula right) {
+
+	public static BooleanFormula makeFormula(BooleanFormula left,
+			BooleanFormula right) {
 		return new OrFormula(left, right);
 	}
-	
+
 	@Override
 	public String plainOutput() {
-		return "( " + pathLeft.plainOutput() + " | " + pathRight.plainOutput() + " )";
+		return "( " + pathLeft.plainOutput() + " | " + pathRight.plainOutput()
+				+ " )";
 	}
-	
+
+	@Override
+	public boolean isTemporal() {
+		if (pathLeft.isTemporal() || pathRight.isTemporal()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isNested() {
+		if (pathLeft.isNested() || pathRight.isNested()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean hasLinearTemplate() {
+		if (!pathLeft.isTemporal() || !pathRight.isTemporal()) {
+			return true;
+		}
+		return false;
+	}
 }
