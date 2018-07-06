@@ -9,11 +9,14 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public interface BooleanFormula {
-	public String plainOutput();
-       //public BooleanFormula makeFormula(BooleanFormula left, BooleanFormula right);
-	
-	boolean isTemporal();
-	boolean isNested();
-	boolean hasLinearTemplate();
+public abstract class BooleanFormula {
+	public abstract String plainOutput();
+
+	public abstract boolean isTemporal();
+	public abstract boolean isNested();
+	public abstract boolean hasLinearTemplate();
+
+	public abstract boolean isPathFormula();
+
+	public abstract BooleanFormula evaluate();
 }

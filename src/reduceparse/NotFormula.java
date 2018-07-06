@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class NotFormula implements BooleanFormula {
+public class NotFormula extends BooleanFormula {
 	public BooleanFormula path;
 
 	public NotFormula(BooleanFormula toNot) {
@@ -40,5 +40,22 @@ public class NotFormula implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		path = path.evaluate();
+		if (path == BooleanConstant.TRUE) {
+			return BooleanConstant.FALSE;
+		}
+		if (path == BooleanConstant.FALSE) {
+			return BooleanConstant.TRUE;
+		}
+		return this;
 	}
 }

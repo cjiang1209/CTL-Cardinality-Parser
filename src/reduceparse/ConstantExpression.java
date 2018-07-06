@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class ConstantExpression implements BooleanFormula {
+public class ConstantExpression extends BooleanFormula {
 	public long numConstant;
 
 	public ConstantExpression(long num) {
@@ -38,5 +38,15 @@ public class ConstantExpression implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		return this;
 	}
 }

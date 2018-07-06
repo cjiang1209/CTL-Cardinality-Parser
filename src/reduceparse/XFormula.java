@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class XFormula implements BooleanFormula {
+public class XFormula extends BooleanFormula {
 	public BooleanFormula path;
 
 	public XFormula(BooleanFormula aPath) {
@@ -44,5 +44,19 @@ public class XFormula implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return path.hasLinearTemplate();
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return true;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		path = path.evaluate();
+		if (path == BooleanConstant.TRUE || path == BooleanConstant.FALSE) {
+			return path;
+		}
+		return this;
 	}
 }

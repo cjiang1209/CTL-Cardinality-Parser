@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author BenjaminSmith
  */
-public class FireableFormula implements BooleanFormula {
+public class FireableFormula extends BooleanFormula {
 	public ArrayList<String> fireTrans;
 	public PetriModel64 theModel;
 
@@ -67,5 +67,15 @@ public class FireableFormula implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		return this;
 	}
 }

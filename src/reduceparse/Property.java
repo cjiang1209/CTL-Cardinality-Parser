@@ -60,4 +60,13 @@ public class Property {
 	public boolean hasLinearTemplate() {
 		return theFormula.hasLinearTemplate();
 	}
+
+	public boolean isConstant() {
+		return theFormula == BooleanConstant.TRUE
+				|| theFormula == BooleanConstant.FALSE;
+	}
+
+	public void evaluate() {
+		theFormula = theFormula.evaluate();
+	}
 }

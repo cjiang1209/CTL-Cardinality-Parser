@@ -42,8 +42,13 @@ public class CTLParse {
 		ArrayList<Property> thoseProperties = getCTL(RCPropertyFile, theModel);
 
 		for (Property p : thoseProperties) {
-			System.out.println(p.propID + ": " + p.isTemporal() + " "
-					+ p.isNested() + " " + p.hasLinearTemplate());
+			p.evaluate();
+		}
+
+		for (Property p : thoseProperties) {
+			System.out.println(p.propID + ": " + p.isConstant() + " "
+					+ p.isTemporal() + " " + p.isNested() + " "
+					+ p.hasLinearTemplate());
 		}
 
 		for (Property p : thoseProperties) {

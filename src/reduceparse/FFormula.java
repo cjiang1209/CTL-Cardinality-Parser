@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class FFormula implements BooleanFormula {
+public class FFormula extends BooleanFormula {
 	public BooleanFormula path;
 
 	public FFormula(BooleanFormula aPath) {
@@ -20,10 +20,6 @@ public class FFormula implements BooleanFormula {
 	public String plainOutput() {
 		return "F(" + path.plainOutput() + ")";
 	}
-
-	/*
-	 * public String plainOutput() { return "(F " + path.plainOutput() + ")"; }
-	 */
 
 	@Override
 	public boolean isTemporal() {
@@ -41,5 +37,19 @@ public class FFormula implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return path.hasLinearTemplate();
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return true;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		path = path.evaluate();
+		if (path == BooleanConstant.TRUE || path == BooleanConstant.FALSE) {
+			return path;
+		}
+		return this;
 	}
 }

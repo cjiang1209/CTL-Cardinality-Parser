@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author BenjaminSmith
  */
-public class TokenCountExpression implements BooleanFormula {
+public class TokenCountExpression extends BooleanFormula {
 	public ArrayList<String> cardPlace;
 	public String boundFormulaName;
 	public String varID;
@@ -74,5 +74,15 @@ public class TokenCountExpression implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		return this;
 	}
 }

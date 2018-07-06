@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class DeadlockFormula implements BooleanFormula {
+public class DeadlockFormula extends BooleanFormula {
 
 	private static BooleanFormula theDeadlock = new DeadlockFormula();
 
@@ -38,5 +38,21 @@ public class DeadlockFormula implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		theDeadlock = theDeadlock.evaluate();
+		if (theDeadlock == BooleanConstant.TRUE
+				|| theDeadlock == BooleanConstant.FALSE) {
+			return theDeadlock;
+		}
+
+		return this;
 	}
 }

@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class PlusExpression implements BooleanFormula {
+public class PlusExpression extends BooleanFormula {
 	public BooleanFormula pathLeft;
 	public BooleanFormula pathRight;
 
@@ -42,5 +42,15 @@ public class PlusExpression implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		return this;
 	}
 }

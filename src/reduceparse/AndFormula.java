@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class AndFormula implements BooleanFormula {
+public class AndFormula extends BooleanFormula {
 	public BooleanFormula pathLeft;
 	public BooleanFormula pathRight;
 
@@ -54,5 +54,31 @@ public class AndFormula implements BooleanFormula {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		pathLeft = pathLeft.evaluate();
+		if (pathLeft == BooleanConstant.FALSE) {
+			return BooleanConstant.FALSE;
+		}
+		pathRight = pathRight.evaluate();
+		if (pathRight == BooleanConstant.FALSE) {
+			return BooleanConstant.FALSE;
+		}
+
+		if (pathLeft == BooleanConstant.TRUE) {
+			return pathRight;
+		}
+		if (pathRight == BooleanConstant.TRUE) {
+			return pathLeft;
+		}
+
+		return this;
 	}
 }

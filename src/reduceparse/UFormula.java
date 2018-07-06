@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author BenjaminSmith
  */
-public class UFormula implements BooleanFormula {
+public class UFormula extends BooleanFormula {
 	public BooleanFormula pathLeft;
 	public BooleanFormula pathRight;
 
@@ -26,8 +26,7 @@ public class UFormula implements BooleanFormula {
 	@Override
 	public String plainOutput() {
 		return "( " + pathLeft.plainOutput() + " ) U ("
-				+ pathRight.plainOutput()
-				+ " )";
+				+ pathRight.plainOutput() + " )";
 	}
 
 	/*
@@ -57,5 +56,28 @@ public class UFormula implements BooleanFormula {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return true;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		pathRight = pathRight.evaluate();
+		if (pathRight == BooleanConstant.FALSE) {
+			return BooleanConstant.FALSE;
+		}
+
+		pathLeft = pathLeft.evaluate();
+		if (pathLeft == BooleanConstant.FALSE) {
+			return pathRight;
+		}
+		if (pathLeft == BooleanConstant.TRUE) {
+			return new FFormula(pathRight);
+		}
+
+		return this;
 	}
 }

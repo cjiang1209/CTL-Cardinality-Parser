@@ -9,7 +9,7 @@ package reduceparse;
  *
  * @author Ben
  */
-public class PlaceExpression implements BooleanFormula {
+public class PlaceExpression extends BooleanFormula {
 	public String placeName;
 
 	public PlaceExpression(String name) {
@@ -34,5 +34,15 @@ public class PlaceExpression implements BooleanFormula {
 	@Override
 	public boolean hasLinearTemplate() {
 		return true;
+	}
+
+	@Override
+	public boolean isPathFormula() {
+		return false;
+	}
+
+	@Override
+	public BooleanFormula evaluate() {
+		return this;
 	}
 }
