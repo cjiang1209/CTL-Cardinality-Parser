@@ -25,7 +25,10 @@ public class AndFormula implements BooleanFormula {
 
 	@Override
 	public String plainOutput() {
-		return "( " + pathLeft.plainOutput() + " & " + pathRight.plainOutput()
+		return "( "
+				+ pathLeft.plainOutput()
+				+ (pathLeft.isTemporal() || pathRight.isTemporal() ? " && "
+						: " & ") + pathRight.plainOutput()
 				+ " )";
 	}
 

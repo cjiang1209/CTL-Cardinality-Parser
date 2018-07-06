@@ -25,8 +25,7 @@ public class LTEFormula implements BooleanFormula {
 
 	@Override
 	public String plainOutput() {
-		return "potential( " + pathLeft.plainOutput() + " <= "
-				+ pathRight.plainOutput() + " )";
+		return pathLeft.plainOutput() + " <= " + pathRight.plainOutput();
 	}
 
 	@Override

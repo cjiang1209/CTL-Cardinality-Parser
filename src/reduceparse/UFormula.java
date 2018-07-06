@@ -25,7 +25,8 @@ public class UFormula implements BooleanFormula {
 
 	@Override
 	public String plainOutput() {
-		return "U( " + pathLeft.plainOutput() + "," + pathRight.plainOutput()
+		return "( " + pathLeft.plainOutput() + " ) U ("
+				+ pathRight.plainOutput()
 				+ " )";
 	}
 

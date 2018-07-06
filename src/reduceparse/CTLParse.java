@@ -46,6 +46,12 @@ public class CTLParse {
 					+ p.isNested() + " " + p.hasLinearTemplate());
 		}
 
+		for (Property p : thoseProperties) {
+			if (p.isTemporal() && p.isNested() && !p.hasLinearTemplate()) {
+				System.out.println(p.propID + ": " + p);
+			}
+		}
+
 		if (!isPNML) {
 			// file was not a pnml file (try it anyway?)
 			System.out
