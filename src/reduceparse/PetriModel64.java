@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package reduceparse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Petri Net Model object.
@@ -43,14 +46,14 @@ public class PetriModel64 {
 		int current = 1;
 		for (PetriPlace64 pp : thePlaces) {
 			placeSet.add(pp.name);
-			String placeName = "P" + current;
+			String placeName = "p" + current;
 			current++;
 			nameTrans.put(pp.name, placeName);
 			pp.myModel = this;
 		}
 		current = 1;
 		for (PetriTransition pt : theTrans) {
-			String transName = "T" + current;
+			String transName = "t" + current;
 			current++;
 			nameTrans.put(pt.id, transName);
 			pt.myModel = this;

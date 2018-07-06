@@ -136,6 +136,19 @@ public class CTLParse {
 		StringBuilder sb = new StringBuilder();
 		sb.append("// Smart file automatically generated from source PNML file\n");
 		sb.append("// " + infile + "\n");
+
+		sb.append("\n");
+		sb.append("// Parameters and Stuff here\n");
+		sb.append("# ProcessGeneration MEDDLY\n");
+		sb.append("# MeddlyVariableStyle ON_THE_FLY\n");
+		sb.append("# MeddlyProcessGeneration OTF_IMPLICIT_SATURATION\n");
+		sb.append("# MeddlyRSSNodeDeletion OPTIMISTIC\n");
+		sb.append("# MeddlyNSFNodeDeletion OPTIMISTIC\n");
+		sb.append("# VariableOrdering FORCEPARAM\n");
+		sb.append("# ParseTemporalOperators true\n");
+		sb.append("# CompactBMCEncoding false\n");
+		sb.append("\n");
+
 		sb.append("pn automodel := {\n");
 
 		// add the places
@@ -169,24 +182,20 @@ public class CTLParse {
 
 		// add upperbounds lines
 		for (Property p : theProperties) {
-			sb.append(p.smartOut(theModel) + "\n");
+			if (p.isTemporal() && p.isNested() && !p.hasLinearTemplate()) {
+				sb.append(p.smartOut(theModel) + "\n");
+			}
 		}
 
 		// add the smart file ending information here
 		sb.append("};\n");
 
-		sb.append("\t// Parameters and Stuff here\n");
-		sb.append("\t# ProcessGeneration MEDDLY\n");
-		sb.append("\t# MeddlyVariableStyle ON_THE_FLY\n");
-		sb.append("\t# MeddlyProcessGeneration OTF_IMPLICIT_SATURATION\n");
-		sb.append("\t# MeddlyRSSNodeDeletion OPTIMISTIC\n");
-		sb.append("\t# MeddlyNSFNodeDeletion OPTIMISTIC\n");
-		sb.append("\t# VariableOrdering FORCEPARAM\n");
-
 		// add the upper bounds outputs
 		// add upperbounds lines
 		for (Property p : theProperties) {
-			sb.append(p.smartOutBottom() + "\n");
+			if (p.isTemporal() && p.isNested() && !p.hasLinearTemplate()) {
+				sb.append(p.smartOutBottom() + "\n");
+			}
 		}
 
 		// Store the Smart file output

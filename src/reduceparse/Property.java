@@ -35,19 +35,15 @@ public class Property {
 
 	public String smartOut(PetriModel64 theModel) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\tstateset " + varID + " := " + "initial & "
-				+ theFormula.plainOutput());
+		sb.append("\ttrace " + varID + " := " + "BMC( "
+				+ theFormula.plainOutput() + " , __BOUND__ )");
 		sb.append("; // ");
 		return sb.toString();
 	}
 
 	public String smartOutBottom() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\ncompute(automodel." + varID + ");");
-		sb.append("\nprint(\"FORMULA " + propID + " \", cond(empty(automodel."
-				+ varID + "),\"FALSE\",\"TRUE\"), \" ");
-
-		sb.append("TECHNIQUES SEQUENTIAL_PROCESSING DECISION_DIAGRAMS\\n\");");
+		sb.append("\nautomodel." + varID + ";");
 		// String delim = "";
 		// sb.append(") // " + boundFormulaName);
 		return sb.toString();

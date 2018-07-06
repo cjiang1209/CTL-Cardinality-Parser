@@ -5,7 +5,6 @@
  */
 package reduceparse;
 
-import java.util.*;
 
 /**
  * @author Benjamin Smith bensmith@iastate.edu

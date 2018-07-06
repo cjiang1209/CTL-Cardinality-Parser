@@ -25,6 +25,25 @@ public class LTEFormula implements BooleanFormula {
 
 	@Override
 	public String plainOutput() {
+		if (pathLeft instanceof ConstantExpression
+				&& pathRight instanceof TokenCountExpression) {
+			ConstantExpression ce = (ConstantExpression) pathLeft;
+			if (ce.getConstantValue() == 0) {
+				return "TRUE";
+			}
+			else if (ce.getConstantValue() == 1) {
+				return pathRight.plainOutput() + " == 1";
+			}
+			else {
+				return "FALSE";
+			}
+		}
+		if (pathLeft instanceof TokenCountExpression
+				&& pathRight instanceof TokenCountExpression) {
+			return "( " + pathLeft.plainOutput() + " == 0 ) | ( "
+					+ pathRight.plainOutput() + " == 1 )";
+		}
+
 		return pathLeft.plainOutput() + " <= " + pathRight.plainOutput();
 	}
 

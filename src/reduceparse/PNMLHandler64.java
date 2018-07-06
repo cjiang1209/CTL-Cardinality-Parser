@@ -5,10 +5,11 @@
  */
 package reduceparse;
 
+import java.util.ArrayList;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import java.util.*;
 
 /**
  * Petri Net Markup Language Basic Parser.
@@ -47,7 +48,7 @@ public class PNMLHandler64 extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equalsIgnoreCase("place")) {
-            String id = attributes.getValue("id");
+			String id = attributes.getValue("id");
             placeName = id;
             placeInit = 0L;
             inPlace = true;

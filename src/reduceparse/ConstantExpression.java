@@ -16,6 +16,10 @@ public class ConstantExpression implements BooleanFormula {
 		numConstant = num;
 	}
 
+	public long getConstantValue() {
+		return numConstant;
+	}
+
 	@Override
 	public String plainOutput() {
 		return "( " + numConstant + " )";
