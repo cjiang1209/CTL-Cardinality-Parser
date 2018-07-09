@@ -36,7 +36,7 @@ public class Property {
 	public String smartOut(PetriModel64 theModel) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\ttrace " + varID + " := " + "BMC( "
-				+ theFormula.plainOutput() + " , __BOUND__ )");
+				+ theFormula.plainOutput() + " , 20, false )");
 		sb.append("; // ");
 		return sb.toString();
 	}
