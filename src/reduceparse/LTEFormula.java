@@ -50,6 +50,16 @@ public class LTEFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		return false;
+	}
+
+	@Override
+	public boolean isECTL() {
+		return false;
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		if (pathLeft instanceof ConstantExpression
 				&& pathRight instanceof TokenCountExpression) {
@@ -59,14 +69,25 @@ public class LTEFormula extends BooleanFormula {
 			} else if (ce.getConstantValue() == 1) {
 				return EqualFormula.makeFormula(pathRight, 1);
 			} else {
-				assert(ce.getConstantValue() >= 2);
+				assert (ce.getConstantValue() >= 2);
 				return BooleanConstant.FALSE;
 			}
 		}
 		if (pathLeft instanceof TokenCountExpression
 				&& pathRight instanceof TokenCountExpression) {
-			return OrFormula.makeFormula(EqualFormula.makeFormula(pathLeft, 0),
-					EqualFormula.makeFormula(pathRight, 1));
+			TokenCountExpression tokenCountLeft = (TokenCountExpression) pathLeft;
+			TokenCountExpression tokenCountRight = (TokenCountExpression) pathRight;
+			if (tokenCountLeft.cardPlace.size() == 1
+					&& tokenCountRight.cardPlace.size() == 1) {
+				return OrFormula.makeFormula(
+						EqualFormula.makeFormula(pathLeft, 0),
+						EqualFormula.makeFormula(pathRight, 1));
+			} else {
+				// TODO: To be implemented
+				return OrFormula.makeFormula(
+						EqualFormula.makeFormula(pathLeft, 0),
+						EqualFormula.makeFormula(pathRight, 1));
+			}
 		}
 		return this;
 	}

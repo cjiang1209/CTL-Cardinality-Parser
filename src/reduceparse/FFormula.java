@@ -48,6 +48,16 @@ public class FFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isECTL() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		path = path.evaluate();
 		if (path == BooleanConstant.TRUE || path == BooleanConstant.FALSE) {

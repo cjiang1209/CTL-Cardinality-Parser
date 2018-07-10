@@ -41,6 +41,16 @@ public class EqualFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		return false;
+	}
+
+	@Override
+	public boolean isECTL() {
+		return false;
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		return this;
 	}

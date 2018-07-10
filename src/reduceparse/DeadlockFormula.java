@@ -46,6 +46,16 @@ public class DeadlockFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isECTL() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		theDeadlock = theDeadlock.evaluate();
 		if (theDeadlock == BooleanConstant.TRUE

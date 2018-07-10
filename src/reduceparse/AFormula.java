@@ -42,6 +42,47 @@ public class AFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		if (path instanceof XFormula) {
+			BooleanFormula subpath = ((XFormula) path).path;
+			if (!subpath.isTemporal() || subpath.isACTL()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (path instanceof FFormula) {
+			BooleanFormula subpath = ((FFormula) path).path;
+			if (!subpath.isTemporal() || subpath.isACTL()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (path instanceof GFormula) {
+			BooleanFormula subpath = ((GFormula) path).path;
+			if (!subpath.isTemporal() || subpath.isACTL()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			assert (path instanceof UFormula);
+			BooleanFormula subpathLeft = ((UFormula) path).pathLeft;
+			BooleanFormula subpathRight = ((UFormula) path).pathRight;
+			if ((!subpathLeft.isTemporal() || subpathLeft.isACTL())
+					&& (!subpathRight.isTemporal() || subpathRight.isACTL())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public boolean isECTL() {
+		return false;
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		path = path.evaluate();
 		if (!path.isPathFormula()) {

@@ -48,6 +48,16 @@ public class NotFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		return path.isECTL();
+	}
+
+	@Override
+	public boolean isECTL() {
+		return path.isACTL();
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		path = path.evaluate();
 		if (path == BooleanConstant.TRUE) {

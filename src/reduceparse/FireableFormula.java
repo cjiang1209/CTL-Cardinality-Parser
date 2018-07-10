@@ -75,6 +75,16 @@ public class FireableFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isECTL() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		return this;
 	}

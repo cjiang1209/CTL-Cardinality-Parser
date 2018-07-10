@@ -66,11 +66,23 @@ public class Property {
 				|| theFormula == BooleanConstant.FALSE;
 	}
 
+	public boolean isACTL() {
+		return theFormula.isACTL();
+	}
+
+	public boolean isECTL() {
+		return theFormula.isECTL();
+	}
+
 	public void evaluate() {
 		theFormula = theFormula.evaluate();
 	}
 
 	public void normalize() {
 		theFormula = theFormula.normalize();
+	}
+	
+	public void negate() {
+		theFormula = theFormula.pushNegation();
 	}
 }

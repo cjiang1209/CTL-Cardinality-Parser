@@ -17,6 +17,8 @@ public abstract class BooleanFormula {
 	public abstract boolean hasLinearTemplate();
 
 	public abstract boolean isPathFormula();
+	public abstract boolean isACTL();
+	public abstract boolean isECTL();
 
 	public abstract BooleanFormula evaluate();
 

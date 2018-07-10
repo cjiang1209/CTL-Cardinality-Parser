@@ -61,6 +61,34 @@ public class OrFormula extends BooleanFormula {
 	}
 
 	@Override
+	public boolean isACTL() {
+		if (pathLeft.isACTL() && pathRight.isACTL()) {
+			return true;
+		}
+		if (pathLeft.isACTL() && !pathRight.isTemporal()) {
+			return true;
+		}
+		if (!pathLeft.isTemporal() && pathRight.isACTL()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isECTL() {
+		if (pathLeft.isECTL() && pathRight.isECTL()) {
+			return true;
+		}
+		if (pathLeft.isECTL() && !pathRight.isTemporal()) {
+			return true;
+		}
+		if (!pathLeft.isTemporal() && pathRight.isECTL()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public BooleanFormula evaluate() {
 		pathLeft = pathLeft.evaluate();
 		if (pathLeft == BooleanConstant.TRUE) {
