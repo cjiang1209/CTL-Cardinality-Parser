@@ -62,13 +62,15 @@ public class AndFormula extends BooleanFormula {
 
 	@Override
 	public boolean isACTL() {
-		if (pathLeft.isACTL() && pathRight.isACTL()) {
+		boolean leftACTL = pathLeft.isACTL();
+		boolean rightACTL = pathRight.isACTL();
+		if (leftACTL && rightACTL) {
 			return true;
 		}
-		if (pathLeft.isACTL() && !pathRight.isTemporal()) {
+		if (leftACTL && !pathRight.isTemporal()) {
 			return true;
 		}
-		if (!pathLeft.isTemporal() && pathRight.isACTL()) {
+		if (!pathLeft.isTemporal() && rightACTL) {
 			return true;
 		}
 		return false;
@@ -76,13 +78,15 @@ public class AndFormula extends BooleanFormula {
 
 	@Override
 	public boolean isECTL() {
-		if (pathLeft.isECTL() && pathRight.isECTL()) {
+		boolean leftECTL = pathLeft.isECTL();
+		boolean rightECTL = pathRight.isECTL();
+		if (leftECTL && rightECTL) {
 			return true;
 		}
-		if (pathLeft.isECTL() && !pathRight.isTemporal()) {
+		if (leftECTL && !pathRight.isTemporal()) {
 			return true;
 		}
-		if (!pathLeft.isTemporal() && pathRight.isECTL()) {
+		if (!pathLeft.isTemporal() && rightECTL) {
 			return true;
 		}
 		return false;

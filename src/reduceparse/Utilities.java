@@ -410,7 +410,7 @@ public class Utilities {
 				SCORE +=  sot * combo[4];
 				bestScore = SCORE;//soups;
 				
-				System.out.println("AT ITER " + iter + " NEW BEST:: SOT " + sot + "  SOS " + sos + " HAS SOPS " + sops + "  HAS SOUS " + sous + " HAS SOUPS " + soups + " WITH SCORE " + SCORE);
+//				System.out.println("AT ITER " + iter + " NEW BEST:: SOT " + sot + "  SOS " + sos + " HAS SOPS " + sops + "  HAS SOUS " + sous + " HAS SOUPS " + soups + " WITH SCORE " + SCORE);
 				toughCount = 0;
 			} else {
 				toughCount++;

@@ -5,6 +5,8 @@
  */
 package reduceparse;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author BenjaminSmith
@@ -12,10 +14,16 @@ package reduceparse;
 public class LTEFormula extends BooleanFormula {
 	public BooleanFormula pathLeft;
 	public BooleanFormula pathRight;
+	public boolean negated;
 
 	private LTEFormula(BooleanFormula left, BooleanFormula right) {
+		this(left, right, false);
+	}
+	
+	private LTEFormula(BooleanFormula left, BooleanFormula right, boolean neg) {
 		pathLeft = left;
 		pathRight = right;
+		negated = neg;
 	}
 
 	public static BooleanFormula makeFormula(BooleanFormula left,
@@ -25,7 +33,7 @@ public class LTEFormula extends BooleanFormula {
 
 	@Override
 	public String plainOutput() {
-		return "( " + pathLeft.plainOutput() + " <= " + pathRight.plainOutput()
+		return "( " + pathLeft.plainOutput() + (negated ? " > " : " <= ") + pathRight.plainOutput()
 				+ " )";
 	}
 
@@ -63,13 +71,49 @@ public class LTEFormula extends BooleanFormula {
 	public BooleanFormula evaluate() {
 		if (pathLeft instanceof ConstantExpression
 				&& pathRight instanceof TokenCountExpression) {
-			ConstantExpression ce = (ConstantExpression) pathLeft;
-			if (ce.getConstantValue() == 0) {
+			ConstantExpression constantLeft = (ConstantExpression) pathLeft;
+			TokenCountExpression tokenCountRight = (TokenCountExpression) pathRight;
+			if (constantLeft.getConstantValue() == 0) {
 				return BooleanConstant.TRUE;
-			} else if (ce.getConstantValue() == 1) {
-				return EqualFormula.makeFormula(pathRight, 1);
-			} else {
-				assert (ce.getConstantValue() >= 2);
+			} else if (constantLeft.getConstantValue() == 1) {
+				// e.g. 1 <= a + b + c
+				BooleanFormula head = null;
+				for (String place : tokenCountRight.cardPlace) {
+					ArrayList<String> cardPlace = new ArrayList<String>();
+					cardPlace.add(place);
+					if (head == null) {
+						head = EqualFormula.makeFormula(
+								new TokenCountExpression(cardPlace,
+										tokenCountRight.theModel), 1);
+					} else {
+						head = OrFormula.makeFormula(head,
+								EqualFormula.makeFormula(
+										new TokenCountExpression(cardPlace,
+												tokenCountRight.theModel), 1));
+					}
+				}
+				return head;
+			} else if (constantLeft.getConstantValue() == tokenCountRight.cardPlace
+					.size()) {
+				// e.g. 3 <= a + b + c
+				BooleanFormula head = null;
+				for (String place : tokenCountRight.cardPlace) {
+					ArrayList<String> cardPlace = new ArrayList<String>();
+					cardPlace.add(place);
+					if (head == null) {
+						head = EqualFormula.makeFormula(
+								new TokenCountExpression(cardPlace,
+										tokenCountRight.theModel), 1);
+					} else {
+						head = AndFormula.makeFormula(head,
+								EqualFormula.makeFormula(
+										new TokenCountExpression(cardPlace,
+												tokenCountRight.theModel), 1));
+					}
+				}
+				return head;
+			} else if (constantLeft.getConstantValue() > tokenCountRight.cardPlace
+					.size()) {
 				return BooleanConstant.FALSE;
 			}
 		}
@@ -84,9 +128,7 @@ public class LTEFormula extends BooleanFormula {
 						EqualFormula.makeFormula(pathRight, 1));
 			} else {
 				// TODO: To be implemented
-				return OrFormula.makeFormula(
-						EqualFormula.makeFormula(pathLeft, 0),
-						EqualFormula.makeFormula(pathRight, 1));
+				return this;
 			}
 		}
 		return this;
@@ -99,6 +141,6 @@ public class LTEFormula extends BooleanFormula {
 
 	@Override
 	public BooleanFormula pushNegation() {
-		throw new UnsupportedOperationException();
+		return new LTEFormula(pathLeft, pathRight, true);
 	}
 }
