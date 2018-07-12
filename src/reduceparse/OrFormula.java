@@ -49,7 +49,7 @@ public class OrFormula extends BooleanFormula {
 
 	@Override
 	public boolean hasLinearTemplate() {
-		if (!pathLeft.isTemporal() || !pathRight.isTemporal()) {
+		if (pathLeft.hasLinearTemplate() && pathRight.hasLinearTemplate()) {
 			return true;
 		}
 		return false;
