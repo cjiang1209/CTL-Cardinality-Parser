@@ -83,6 +83,6 @@ public class Property {
 	}
 	
 	public void negate() {
-		theFormula = theFormula.pushNegation();
+		theFormula = new NotFormula(theFormula);
 	}
 }

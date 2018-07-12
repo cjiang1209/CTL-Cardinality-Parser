@@ -45,6 +45,10 @@ public class CTLParse {
 
 		for (Property p : thoseProperties) {
 			p.evaluate();
+			if (p.isACTL()) {
+				// Negate ACTL to get ECTL
+				p.negate();
+			}
 			p.normalize();
 		}
 
@@ -62,29 +66,25 @@ public class CTLParse {
 							p.hasLinearTemplate(),
 							p.isACTL(),
 							p.isECTL(),
-							p.isTemporal() && p.isNested()
-									&& !p.hasLinearTemplate() ? "***" : ""));
+							isSelected(p) ? "***" : ""));
 		}
 
 		System.out.println();
 		for (Property p : thoseProperties) {
-			if (p.isACTL()) {
-				p.negate();
-			}
-			if (p.isTemporal() && p.isNested() && !p.hasLinearTemplate()) {
+			if (isSelected(p)) {
 				System.out.println(p);
+				
+				String outfile = p.propID + ".sm";
+				writeSmart64SingleProperty(theModel, p, filename, outfile);
 			}
 		}
 
 //		String outfile = filename.substring(0, filename.length() - 5) + ".sm";
 //		writeSmart64(theModel, thoseProperties, filename, outfile);
-		
-		for (Property p : thoseProperties) {
-			if (p.isTemporal() && p.isNested() && !p.hasLinearTemplate()) {
-				String outfile = p.propID + ".sm";
-				writeSmart64SingleProperty(theModel, p, filename, outfile);
-			}
-		}
+	}
+	
+	private static boolean isSelected(Property p) {
+		return p.isECTL() && p.isNested() && p.hasLinearTemplate();
 	}
 
 	/**
