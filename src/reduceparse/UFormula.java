@@ -102,4 +102,20 @@ public class UFormula extends BooleanFormula {
 	public BooleanFormula pushNegation() {
 		throw new UnsupportedOperationException();
 	}
+
+	public BooleanFormula pushNegationAU() {
+		System.out.println("Negating AU...");
+
+		// \neg A p U q = EG \neg q OR E \neg q U (\neg p AND \neg q)
+
+		BooleanFormula negPathRight1 = pathRight.pushNegation();
+		BooleanFormula negPathRight2 = pathRight.pushNegation();
+		BooleanFormula negPathRight3 = pathRight.pushNegation();
+		BooleanFormula negPathLeft = pathLeft.pushNegation();
+
+		BooleanFormula eg = new EFormula(new GFormula(negPathRight1));
+		BooleanFormula eu = new EFormula(new UFormula(negPathRight2,
+				AndFormula.makeFormula(negPathLeft, negPathRight3)));
+		return OrFormula.makeFormula(eg, eu);
+	}
 }

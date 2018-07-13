@@ -84,7 +84,7 @@ public class CTLParse {
 	}
 	
 	private static boolean isSelected(Property p) {
-		return p.isECTL() && p.isNested() && p.hasLinearTemplate();
+		return p.isECTL() && p.isNested() && !p.hasLinearTemplate();
 	}
 
 	/**

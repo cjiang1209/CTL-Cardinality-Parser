@@ -99,6 +99,13 @@ public class AFormula extends BooleanFormula {
 
 	@Override
 	public BooleanFormula pushNegation() {
-		return new EFormula(path.pushNegation());
+		if (path instanceof UFormula) {
+			// AU
+			UFormula u = (UFormula) path;
+			return u.pushNegationAU();
+		}
+		else {
+			return new EFormula(path.pushNegation());
+		}
 	}
 }
