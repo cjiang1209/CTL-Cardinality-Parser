@@ -49,7 +49,8 @@ public class AndFormula extends BooleanFormula {
 
 	@Override
 	public boolean hasLinearTemplate() {
-		if (pathLeft.hasLinearTemplate() && pathRight.hasLinearTemplate()) {
+		if ((pathLeft.hasLinearTemplate() && !pathRight.isTemporal())
+				|| (!pathLeft.isTemporal() && pathRight.hasLinearTemplate())) {
 			return true;
 		}
 		return false;
