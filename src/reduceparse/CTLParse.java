@@ -49,7 +49,10 @@ public class CTLParse {
 				// Negate ACTL to get ECTL
 				p.negate();
 			}
-			p.normalize();
+			// Normalize ECTL only
+			if (p.isECTL()) {
+				p.normalize();
+			}
 		}
 
 		System.out.println();
