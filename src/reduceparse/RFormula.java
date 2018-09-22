@@ -5,29 +5,23 @@
  */
 package reduceparse;
 
-/**
- *
- * @author BenjaminSmith
- */
-public class UFormula extends BooleanFormula {
-	public static final boolean SUPPORT_RELEASE = true;
-	
+public class RFormula extends BooleanFormula {	
 	public BooleanFormula pathLeft;
 	public BooleanFormula pathRight;
 
-	private UFormula(BooleanFormula left, BooleanFormula right) {
+	private RFormula(BooleanFormula left, BooleanFormula right) {
 		pathLeft = left;
 		pathRight = right;
 	}
 
 	public static BooleanFormula makeFormula(BooleanFormula left,
 			BooleanFormula right) {
-		return new UFormula(left, right);
+		return new RFormula(left, right);
 	}
 
 	@Override
 	public String plainOutput() {
-		return "( " + pathLeft.plainOutput() + " ) U ("
+		return "( " + pathLeft.plainOutput() + " ) R ("
 				+ pathRight.plainOutput() + " )";
 	}
 
@@ -55,7 +49,8 @@ public class UFormula extends BooleanFormula {
 
 	@Override
 	public boolean hasLinearTemplate() {
-		if (!pathLeft.isTemporal()) {
+		if (!pathRight.isTemporal()) {
+			// return pathLeft.hasLienarTemplate();
 			return true;
 		}
 		return false;
@@ -85,10 +80,10 @@ public class UFormula extends BooleanFormula {
 
 		pathLeft = pathLeft.evaluate();
 		if (pathLeft == BooleanConstant.FALSE) {
-			return pathRight;
+			return new GFormula(pathRight);
 		}
 		if (pathLeft == BooleanConstant.TRUE) {
-			return new FFormula(pathRight);
+			return pathRight;
 		}
 
 		return this;
@@ -104,29 +99,5 @@ public class UFormula extends BooleanFormula {
 	@Override
 	public BooleanFormula pushNegation() {
 		throw new UnsupportedOperationException();
-	}
-
-	public BooleanFormula pushNegationAU() {
-		System.out.println("Negating AU...");
-
-		if (UFormula.SUPPORT_RELEASE) {
-			// \neg A p U q = E \neg p R \neg q
-			BooleanFormula negPathLeft = pathLeft.pushNegation();
-			BooleanFormula negPathRight = pathRight.pushNegation();
-			return new EFormula(RFormula.makeFormula(negPathLeft, negPathRight));
-		}
-		else {
-			// \neg A p U q = EG \neg q OR E \neg q U (\neg p AND \neg q)
-	
-			BooleanFormula negPathRight1 = pathRight.pushNegation();
-			BooleanFormula negPathRight2 = pathRight.pushNegation();
-			BooleanFormula negPathRight3 = pathRight.pushNegation();
-			BooleanFormula negPathLeft = pathLeft.pushNegation();
-	
-			BooleanFormula eg = new EFormula(new GFormula(negPathRight1));
-			BooleanFormula eu = new EFormula(new UFormula(negPathRight2,
-					AndFormula.makeFormula(negPathLeft, negPathRight3)));
-			return OrFormula.makeFormula(eg, eu);
-		}
 	}
 }

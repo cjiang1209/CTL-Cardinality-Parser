@@ -69,6 +69,15 @@ public class EFormula extends BooleanFormula {
 			} else {
 				return false;
 			}
+		} else if (path instanceof RFormula) {
+			BooleanFormula subpathLeft = ((RFormula) path).pathLeft;
+			BooleanFormula subpathRight = ((RFormula) path).pathRight;
+			if ((!subpathLeft.isTemporal() || subpathLeft.isECTL())
+					&& (!subpathRight.isTemporal() || subpathRight.isECTL())) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			assert (path instanceof UFormula);
 			BooleanFormula subpathLeft = ((UFormula) path).pathLeft;
